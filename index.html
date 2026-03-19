@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>간단 할 일 관리</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .todo-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .input-group input[type="text"] {
+            flex-grow: 1;
+            border: none;
+            padding: 12px 15px;
+            font-size: 1em;
+            outline: none;
+            background-color: #f9f9f9;
+        }
+
+        .input-group button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .input-group button:hover {
+            background-color: #2980b9;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            background-color: #fefefe;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .todo-item.completed {
+            background-color: #e8f5e9; /* Light green for completed */
+            border-color: #c8e6c9;
+        }
+
+        .todo-item.completed span {
+            text-decoration: line-through;
+            color: #7f8c8d;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 15px;
+            min-width: 20px;
+            min-height: 20px;
+            accent-color: #27ae60;
+            cursor: pointer;
+        }
+
+        .todo-item span {
+            flex-grow: 1;
+            font-size: 1.1em;
+            word-break: break-word;
+            padding-right: 10px;
+        }
+
+        .todo-item .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+my_ai_bot, [2026-03-19 오전 11:41]
+    .todo-
+
+my_ai_bot, [2026-03-19 오전 11:41]
+item .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            body {
+
+my_ai_bot, [2026-03-19 오전 11:41]
+padding: 15px;
+            }
+            .todo-container {
+                padding: 20px;
+                box-shadow: none; /* Lighter shadow on small screens */
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .input-group button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            .todo-item {
+                flex-wrap: wrap; /* Allow items to wrap */
+                padding: 10px 12px;
+            }
+            .todo-item span {
+                width: calc(100% - 70px); /* Adjust width for checkbox and button */
+                order: 1; /* Place text below checkbox/button if wrapped */
+                margin-top: 5px;
+            }
+            .todo-item input[type="checkbox"] {
+                order: 0;
+                margin-right: 10px;
+            }
+            .todo-item .delete-btn {
+                order: 2;
+                margin-left: auto;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>간단 할 일</h1>
+        <div class="input-group">
+            <input type="text" id="new-todo-input" placeholder="새로운 할 일을 추가하세요">
+            <button id="add-todo-btn">추가</button>
+        </div>
+        <ul class="todo-list" id="todo-list">
+            <!-- 할 일 항목들이 여기에 추가됩니다 -->
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const newTodoInput = document.getElementById('new-todo-input');
+            const addTodoBtn = document.getElementById('add-todo-btn');
+            const todoList = document.getElementById('todo-list');
+
+            let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+            function saveTodos() {
+                localStorage.setItem('todos', JSON.stringify(todos));
+            }
+
+            function renderTodos() {
+                todoList.innerHTML = ''; // 기존 목록 비우기
+                todos.forEach((todo, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('todo-item');
+                    if (todo.completed) {
+                        listItem.classList.add('completed');
+                    }
+
+                    listItem.innerHTML = `
+                        <input type="checkbox" ${todo.completed ? 'checked' : ''} data-index="${index}">
+                        <span>${todo.text}</span>
+                        <button class="delete-btn" data-index="${index}">삭제</button>
+                    `;
+                    todoList.appendChild(listItem);
+                });
+            }
+
+            // 할 일 추가
+            addTodoBtn.addEventListener('click', () => {
+                const todoText = newTodoInput.value.trim();
+                if (todoText !== '') {
+                    todos.push({ text: todoText, completed: false });
+                    newTodoInput.value = ''; // 입력 필드 초기화
+                    saveTodos();
+                    renderTodos();
+                }
+            });
+
+            // Enter 키로 할 일 추가
+            newTodoInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addTodoBtn.click();
+                }
+            });
+
+            // 할 일 완료/삭제 처리 (이벤트 위임)
+            todoList.addEventListener('click', (e) => {
+                if (e.target.type === 'checkbox') {
+                    const index = e.target.dataset.index;
+                    todos[index].completed = e.target.checked;
+                    saveTodos();
+                    renderTodos(); // 상태 변경 후 다시 렌더링하여 스타일 적용
+                } else if (e.target.classList.contains('delete-btn')) {
+                    const index = e.target.dataset.index;
+                    todos.splice(index, 1); // 해당 인덱스의 할 일 삭제

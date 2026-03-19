@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테스트 프로젝트 보드</title>
+    <title>푸린짱 프로젝트 보드</title>
     <style>
         :root {
             --bg-color: #F8F8F8;
@@ -14,9 +14,9 @@
             --done-color: #34C759; /* Apple Green */
             --doing-color: #FF9500; /* Apple Orange */
             --todo-color: #5856D6; /* Apple Violet */
-            --text-color: #333333;\
-            --subtle-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);\
-            --deep-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.08);\
+            --text-color: #333333;
+            --subtle-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+            --deep-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.08);
         }
 
         body {
@@ -109,17 +109,18 @@
             background-color: #006ee6;
         }
         .input-group button:active {
-            transform: scale(0.98);     }
-
+            transform: scale(0.98);
+        }
 
         .kanban-board {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: gri
+d;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
         }
 
-.kanban-column {
-            background-color: var(--bg-color);
+        .kanban-column {
+background-color: var(--bg-color);
             padding: 20px 20px 10px 20px;
             border-radius: 10px;
             box-shadow: var(--subtle-shadow);
@@ -171,13 +172,13 @@
 
         .task-actions {
             display: flex;
-            justify-content: space-between;\
-            align-items: center;\
-            border-top: 1px solid var(--border-color);\
-            padding-top: 10px;\
-            margin-top: 5px;\
-            flex-wrap: wrap;\
-            gap: 8px;\
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .task-actions button {
@@ -248,134 +249,135 @@
                 gap: 20px;
             }
             .kanban-column {
+                padding: 15px;
+ }
 
-
-padding: 15px;
-            }
             .kanban-column h2 {
                 font-size: 1.2em;
             }
             .task-actions {
                 flex-direction: column; /* Stack buttons vertically if needed */
                 align-items: stretch;
-            }\
-            .task-actions button {\
-                width: 100%;\
-                margin-top: 5px;\
-            }\
-        }\
-    </style>\
-</head>\
-<body>\
-    <div class=\"project-board-container\">\
-        <header>\
-            <h1 contenteditable=\"true\" id=\"project-title\">나의 푸린짱 프로젝트</h1>\
-            <div class=\"project-description\" contenteditable=\"true\" id=\"project-description\">\
-                푸린짱과 함께 만드는 멋진 웹 프로젝트입니다. 이 설명은 클릭해서 수정할 수 있어요!\
-            </div>\
-        </header>\
+            }
+            .task-actions button {
+                width: 100%;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="project-board-container">
+        <header>
+            <h1 contenteditable="true" id="project-title">나의 푸린짱 프로젝트</h1>
+            <div class="project-description" contenteditable="true" id="project-description">
+                푸린짱과 함께 만드는 멋진 웹 프로젝트입니다. 이 설명은 클릭해서 수정할 수 있어요!
+            </div>
+        </header>
 
-        <div class=\"input-group\">\
-            <input type=\"text\" id=\"new-task-input\" placeholder=\"새로운 작업을 추가하세요\">\
-            <button id=\"add-task-btn\">작업 추가</button>\
-        </div>\
+        <div class="input-group">
+            <input type="text" id="new-task-input" placeholder="새로운 작업을 추가하세요">
+            <button id="add-task-btn">작업 추가</button>
+        </div>
 
-        <div class=\"kanban-board\">\
-            <div class=\"kanban-column todo\">\
-                <h2>할 일</h2>\
-                <ul class=\"task-list\" id=\"task-list-todo\"></ul>\
-            </div>\
-            <div class=\"kanban-column doing\">\
-                <h2>진행 중</h2>\
-                <ul class=\"task-list\" id=\"task-list-doing\"></ul>\
-            </div>\
-            <div class=\"kanban-column done\">\
-                <h2>완료</h2>\
-                <ul class=\"task-list\" id=\"task-list-done\"></ul>\
-            </div>\
-        </div>\
-    </div>\
+        <div class="kanban-board">
+            <div class="kanban-column todo">
+                <h2>할 일</h2>
+                <ul class="task-list" id="task-list-todo"></ul>
+            </div>
+            <div class="kanban-column doing">
+                <h2>진행 중</h2>
+                <ul class="task-list" id="task-list-doing"></ul>
+            </div>
+            <div class="kanban-column done">
+                <h2>완료</h2>
+                <ul class="task-list" id="task-list-done"></ul>
+            </div>
+        </div>
+    </div>
 
-    <footer>\
-        <p>&copy; 2026 테스트 프로젝트. Made with ❤️ by Purin for Usagi</p>\
-    </footer>\
+    <footer>
+        <p>&copy; 2026 푸린짱 프로젝트. Made with ❤️ by Purin-chan for Usagi-nim.</p>
+    </footer>
 
-    <script>\
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+            const projectTitleElem = document.getElementById('project-title');
+            const projectDescriptionElem = document.getElementById('project-description');
+            const newTaskInput = document.getElementById('new-task-input');
+            const addTaskBtn = document.getElementById('add-task-btn');
+            const taskListTodo = document.getElementById('task-list-todo');
+            const taskListDoing = document.getElementById('task-list-doing');
+            const taskListDone = document.getElementById('task-list-done');
 
-document.addEventListener(\'DOMContentLoaded\', () => {\
-            const projectTitleElem = document.getElementById(\'project-title\');\
-            const projectDescriptionElem = document.getElementById(\'project-description\');\
-            const newTaskInput = document.getElementById(\'new-task-input\');\
-            const addTaskBtn = document.getElementById(\'add-task-btn\');\
-            const taskListTodo = document.getElementById(\'task-list-todo\');\
-            const taskListDoing = document.getElementById(\'task-list-doing\');\
-            const taskListDone = document.getElementById(\'task-list-done\');\
+            let projectData = JSON.parse(localStorage.getItem('purinProjectData')) || {
+                title: '나의 푸린짱 프로젝트',
+                description: '푸린짱과 함께 만드는 멋진 웹 프로젝트입니다. 이 설명은 클릭해서 수정할 수 있어요!',
+                tasks: []
+            };
 
-            let projectData = JSON.parse(localStorage.getItem(\'purinProjectData\')) || {\
-                title: \'R&D프로젝트\',\
-                description: \'이 설명은 클릭해서 수정할 수 있어요!\',\
-                tasks: []\
-            };\
+            // Initial render of project title and description
+            projectTitleElem.textContent = projectData.title;
+            projectDescriptionElem.textContent = projectData.description;
 
-            // Initial render of project title and description\
-            projectTitleElem.textContent = projectData.title;\
-            projectDescriptionElem.textContent = projectData.description;\
+            function saveProjectData() {
+                projectData.title = projectTitleElem.textContent;
+                projectData.description = projectDescriptionElem.textContent;
+                localStorage.setItem('purinProjectData', JSON.stringify(projectData));
+            }
 
-            function saveProjectData() {\
-                projectData.title = projectTitleElem.textContent;\
-                projectData.description = projectDescriptionElem.textContent;\
-                localStorage.setItem(\'purinProjectData\', JSON.stringify(projectData));\
-            }\
+            // Save title/description on blur
+            projectTitleElem.addEventListener('blur', saveProjectData);
+            projectDescriptionElem.addEventListener('blur', saveProjectData);
 
-            // Save title/description on blur\
-            projectTitleElem.addEventListener(\'blur\', saveProjectData);\
-            projectDescriptionElem.addEventListener(\'blur\', saveProjectData);\
+            function renderTasks() {
+                taskListTodo.innerHTML = '';
+                taskListDoing.innerHTML = '';
+                taskListDone.innerHTML = '';
 
-            function renderTasks() {\
-                taskListTodo.innerHTML = \'\';\
-                taskListDoing.innerHTML = \'\';\\
-                taskListDone.innerHTML = \'\';\
+                projectData.tasks.forEach((task, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('task-item');
+                    listItem.dataset.index = index; // Store original index
 
-                projectData.tasks.forEach((task, index) => {\
-                    const listItem = document.createElement(\'li\');\
-                    listItem.classList.add(\'task-item\');\
-                    listItem.dataset.index = index; // Store original index\
+                    let buttonsHtml = '';
+                    if (task.status === 'todo') {
+                        buttonsHtml = `
+                            <button class="move-btn next" data-action="next">진행 중으로 →</button>
+                            <button class="delete-btn" data-action="delete">삭제</button>
+                        `;
+                    } else if (task.status === 'doing') {
+                        buttonsHtml = `
+                            <button class="move-btn prev" data-action="prev">← 할 일로</button>
+                            <button class="move-btn next" data-action="next">완료로 →</button>
+                            <button class="delete-btn" data-action="delete">삭제</button>
+                        `;
+                    } else if (task.status === 'done') {
+                        buttonsHtml = `
+                            <button class="move-btn prev" data-action="prev">← 진행 중으로</button>
+                            <button class="delete-btn" data-action="delete">삭제</button>
+                        `;
+                    }
 
-                    let buttonsHtml = \'\';\
-                    if (task.status === \'todo\') {\
-                        buttonsHtml = `\
-                            <button class=\"move-btn next\" data-action=\"next\">진행 중으로 →</button>\
-                            <button class=\"delete-btn\" data-action=\"delete\">삭제</button>\
-                        `;\
-                    } else if (task.status === \'doing\') {\
-                        buttonsHtml = `\
-                            <button class=\"move-btn prev\" data-action=\"prev\">← 할 일로</button>\
-                            <button class=\"move-btn next\" data-action=\"next\">완료로 →</button>\
-                            <button class=\"delete-btn\" data-action=\"delete\">삭제</button>\
-                        `;\
-                    } else if (task.status === \'done\') {\
-                        buttonsHtml = `\
-                            <button class=\"move-btn prev\" data-action=\"prev\">← 진행 중으로</button>\
-                            <button class=\"delete-btn\" data-action=\"delete\">삭제</button>\
-                        `;\
-                    }\
+                    listItem.innerHTML = `
+                        <div class="task-item-content">${task.text}</div>
+                        <div class="task-actions">
+                            ${buttonsHtml}
+                        </div>
+                    `;
 
-                    listItem.innerHTML = `\
-                        <div class=\"task-item-content\">${task.text}</div>\
-                        <div class=\"task-actions\">\
-                            ${buttonsHtml}\
-                        </div>\
-                    `;\
+                    if (task.status === 'todo') {
+                        taskListTodo.appendChild(listItem);
+                    } else if (task.status === 'doing') {
+                        taskListDoing.appendChild(listItem);
+                    } else if (task.status === 'done') {
+                        taskListDone.appendChild(listItem);
+                    }
+                });
+            }
 
-                    if (task.status === \'todo\') {\
-                        taskListTodo.appendChild(listItem);\
-                    } else if (task.status === \'doing\') {\
-                        taskListDoing.appendChild(listItem);\
-                    } else if (task.status === \'done\') {\
-                        taskListDone.appendChild(listItem);\
-                    }\
-                });\
-            }\
+            // Add new task
+            addTaskBtn.addEventListener('click', () => {
+                const taskText = newTaskInput.value.trim();
 
-
-
+        

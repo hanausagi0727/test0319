@@ -3,236 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>간단 할 일 관리</title>
+    <title>테스트 프로젝트 보드</title>
     <style>
+        :root {
+            --bg-color: #F8F8F8;
+            --card-bg-color: #FFFFFF;
+            --border-color: #E0E0E0;
+            --primary-color: #007AFF; /* Apple Blue */
+            --secondary-color: #A0A0A0; /* Light Gray */
+            --done-color: #34C759; /* Apple Green */
+            --doing-color: #FF9500; /* Apple Orange */
+            --todo-color: #5856D6; /* Apple Violet */
+            --text-color: #333333;\
+            --subtle-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);\
+            --deep-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.08);\
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
+            line-height: 1.5;
         }
 
-        .todo-container {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        .project-board-container {
+            background-color: var(--card-bg-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--deep-shadow);
             width: 100%;
-            max-width: 500px;
+            max-width: 1200px;
             box-sizing: border-box;
+            margin-bottom: 20px;
         }
 
-        h1 {
+        header {
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 25px;
-            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .project-description {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            min-height: 40px;
+            line-height: 1.4;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .project-description:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
         }
 
         .input-group {
             display: flex;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            border-radius: 5px;
+            margin-bottom: 30px;
+            box-shadow: var(--subtle-shadow);
+            border-radius: 8px;
             overflow: hidden;
         }
 
         .input-group input[type="text"] {
             flex-grow: 1;
             border: none;
-            padding: 12px 15px;
+            padding: 14px 18px;
             font-size: 1em;
             outline: none;
-            background-color: #f9f9f9;
+            background-color: #FDFDFD;
+            color: var(--text-color);
         }
 
         .input-group button {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 25px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            transition: background-color 0.2s ease, transform 0.1s ease;
         }
 
         .input-group button:hover {
-            background-color: #2980b9;
+            background-color: #006ee6;
+        }
+        .input-group button:active {
+            transform: scale(0.98);     }
+
+
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
-        .todo-list {
+.kanban-column {
+            background-color: var(--bg-color);
+            padding: 20px 20px 10px 20px;
+            border-radius: 10px;
+            box-shadow: var(--subtle-shadow);
+            display: flex;
+            flex-direction: column;
+            min-height: 300px; /* Ensures columns are visible even if empty */
+        }
+
+        .kanban-column h2 {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-color);
+        }
+        .kanban-column.todo h2 { border-color: var(--todo-color); color: var(--todo-color); }
+        .kanban-column.doing h2 { border-color: var(--doing-color); color: var(--doing-color); }
+        .kanban-column.done h2 { border-color: var(--done-color); color: var(--done-color); }
+
+
+        .task-list {
             list-style: none;
             padding: 0;
             margin: 0;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            background-color: #fefefe;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            transition: all 0.3s ease;
-        }
-
-        .todo-item.completed {
-            background-color: #e8f5e9; /* Light green for completed */
-            border-color: #c8e6c9;
-        }
-
-        .todo-item.completed span {
-            text-decoration: line-through;
-            color: #7f8c8d;
-        }
-
-        .todo-item input[type="checkbox"] {
-            margin-right: 15px;
-            min-width: 20px;
-            min-height: 20px;
-            accent-color: #27ae60;
-            cursor: pointer;
-        }
-
-        .todo-item span {
             flex-grow: 1;
-            font-size: 1.1em;
-            word-break: break-word;
-            padding-right: 10px;
         }
 
-        .todo-item .delete-btn {
-            background-color: #e74c3c;
+        .task-item {
+            background-color: var(--card-bg-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: var(--subtle-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .task-item-content {
+            font-size: 1.05em;
+            word-break: break-word;
+            flex-grow: 1;
+            color: var(--text-color);
+        }
+
+        .task-actions {
+            display: flex;
+            justify-content: space-between;\
+            align-items: center;\
+            border-top: 1px solid var(--border-color);\
+            padding-top: 10px;\
+            margin-top: 5px;\
+            flex-wrap: wrap;\
+            gap: 8px;\
+        }
+
+        .task-actions button {
+            background-color: var(--secondary-color);
             color: white;
             border: none;
             padding: 8px 12px;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 0.85em;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            font-weight: 500;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        .task-actions button:hover {
+            background-color: #888888;
+        }
+        .task-actions button:active {
+            transform: scale(0.98);
+        }
+        .task-actions .move-btn.next {
+            background-color: var(--primary-color);
+        }
+        .task-actions .move-btn.next:hover {
+            background-color: #006ee6;
+        }
+        .task-actions .move-btn.prev {
+            background-color: #6C757D; /* Darker gray for prev */
+        }
+        .task-actions .move-btn.prev:hover {
+            background-color: #5A6268;
+        }
+        .task-actions .delete-btn {
+            background-color: #DC3545; /* Apple Red */
+        }
+        .task-actions .delete-btn:hover {
+            background-color: #C82333;
+        }
+
+        footer {
+            margin-top: 40px;
             font-size: 0.9em;
-            transition: background-color 0.3s ease;
+            color: var(--secondary-color);
+            text-align: center;
         }
 
-my_ai_bot, [2026-03-19 오전 11:41]
-    .todo-
-
-my_ai_bot, [2026-03-19 오전 11:41]
-item .delete-btn:hover {
-            background-color: #c0392b;
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 600px) {
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
             body {
-
-my_ai_bot, [2026-03-19 오전 11:41]
-padding: 15px;
+                padding: 15px;
             }
-            .todo-container {
+            .project-board-container {
                 padding: 20px;
-                box-shadow: none; /* Lighter shadow on small screens */
             }
-            h1 {
-                font-size: 1.5em;
+            header h1 {
+                font-size: 2em;
+            }
+            .input-group input[type="text"] {
+                padding: 12px 15px;
             }
             .input-group button {
-                padding: 10px 15px;
+                padding: 12px 20px;
                 font-size: 0.9em;
             }
-            .todo-item {
-                flex-wrap: wrap; /* Allow items to wrap */
-                padding: 10px 12px;
+            .kanban-board {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+                gap: 20px;
             }
-            .todo-item span {
-                width: calc(100% - 70px); /* Adjust width for checkbox and button */
-                order: 1; /* Place text below checkbox/button if wrapped */
-                margin-top: 5px;
+            .kanban-column {
+
+
+padding: 15px;
             }
-            .todo-item input[type="checkbox"] {
-                order: 0;
-                margin-right: 10px;
+            .kanban-column h2 {
+                font-size: 1.2em;
             }
-            .todo-item .delete-btn {
-                order: 2;
-                margin-left: auto;
-                padding: 6px 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="todo-container">
-        <h1>간단 할 일</h1>
-        <div class="input-group">
-            <input type="text" id="new-todo-input" placeholder="새로운 할 일을 추가하세요">
-            <button id="add-todo-btn">추가</button>
-        </div>
-        <ul class="todo-list" id="todo-list">
-            <!-- 할 일 항목들이 여기에 추가됩니다 -->
-        </ul>
-    </div>
+            .task-actions {
+                flex-direction: column; /* Stack buttons vertically if needed */
+                align-items: stretch;
+            }\
+            .task-actions button {\
+                width: 100%;\
+                margin-top: 5px;\
+            }\
+        }\
+    </style>\
+</head>\
+<body>\
+    <div class=\"project-board-container\">\
+        <header>\
+            <h1 contenteditable=\"true\" id=\"project-title\">나의 푸린짱 프로젝트</h1>\
+            <div class=\"project-description\" contenteditable=\"true\" id=\"project-description\">\
+                푸린짱과 함께 만드는 멋진 웹 프로젝트입니다. 이 설명은 클릭해서 수정할 수 있어요!\
+            </div>\
+        </header>\
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const newTodoInput = document.getElementById('new-todo-input');
-            const addTodoBtn = document.getElementById('add-todo-btn');
-            const todoList = document.getElementById('todo-list');
+        <div class=\"input-group\">\
+            <input type=\"text\" id=\"new-task-input\" placeholder=\"새로운 작업을 추가하세요\">\
+            <button id=\"add-task-btn\">작업 추가</button>\
+        </div>\
 
-            let todos = JSON.parse(localStorage.getItem('todos')) || [];
+        <div class=\"kanban-board\">\
+            <div class=\"kanban-column todo\">\
+                <h2>할 일</h2>\
+                <ul class=\"task-list\" id=\"task-list-todo\"></ul>\
+            </div>\
+            <div class=\"kanban-column doing\">\
+                <h2>진행 중</h2>\
+                <ul class=\"task-list\" id=\"task-list-doing\"></ul>\
+            </div>\
+            <div class=\"kanban-column done\">\
+                <h2>완료</h2>\
+                <ul class=\"task-list\" id=\"task-list-done\"></ul>\
+            </div>\
+        </div>\
+    </div>\
 
-            function saveTodos() {
-                localStorage.setItem('todos', JSON.stringify(todos));
-            }
+    <footer>\
+        <p>&copy; 2026 테스트 프로젝트. Made with ❤️ by Purin for Usagi</p>\
+    </footer>\
 
-            function renderTodos() {
-                todoList.innerHTML = ''; // 기존 목록 비우기
-                todos.forEach((todo, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('todo-item');
-                    if (todo.completed) {
-                        listItem.classList.add('completed');
-                    }
+    <script>\
 
-                    listItem.innerHTML = `
-                        <input type="checkbox" ${todo.completed ? 'checked' : ''} data-index="${index}">
-                        <span>${todo.text}</span>
-                        <button class="delete-btn" data-index="${index}">삭제</button>
-                    `;
-                    todoList.appendChild(listItem);
-                });
-            }
+document.addEventListener(\'DOMContentLoaded\', () => {\
+            const projectTitleElem = document.getElementById(\'project-title\');\
+            const projectDescriptionElem = document.getElementById(\'project-description\');\
+            const newTaskInput = document.getElementById(\'new-task-input\');\
+            const addTaskBtn = document.getElementById(\'add-task-btn\');\
+            const taskListTodo = document.getElementById(\'task-list-todo\');\
+            const taskListDoing = document.getElementById(\'task-list-doing\');\
+            const taskListDone = document.getElementById(\'task-list-done\');\
 
-            // 할 일 추가
-            addTodoBtn.addEventListener('click', () => {
-                const todoText = newTodoInput.value.trim();
-                if (todoText !== '') {
-                    todos.push({ text: todoText, completed: false });
-                    newTodoInput.value = ''; // 입력 필드 초기화
-                    saveTodos();
-                    renderTodos();
-                }
-            });
+            let projectData = JSON.parse(localStorage.getItem(\'purinProjectData\')) || {\
+                title: \'R&D프로젝트\',\
+                description: \'이 설명은 클릭해서 수정할 수 있어요!\',\
+                tasks: []\
+            };\
 
-            // Enter 키로 할 일 추가
-            newTodoInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    addTodoBtn.click();
-                }
-            });
+            // Initial render of project title and description\
+            projectTitleElem.textContent = projectData.title;\
+            projectDescriptionElem.textContent = projectData.description;\
 
-            // 할 일 완료/삭제 처리 (이벤트 위임)
-            todoList.addEventListener('click', (e) => {
-                if (e.target.type === 'checkbox') {
-                    const index = e.target.dataset.index;
-                    todos[index].completed = e.target.checked;
-                    saveTodos();
-                    renderTodos(); // 상태 변경 후 다시 렌더링하여 스타일 적용
-                } else if (e.target.classList.contains('delete-btn')) {
-                    const index = e.target.dataset.index;
-                    todos.splice(index, 1); // 해당 인덱스의 할 일 삭제
+            function saveProjectData() {\
+                projectData.title = projectTitleElem.textContent;\
+                projectData.description = projectDescriptionElem.textContent;\
+                localStorage.setItem(\'purinProjectData\', JSON.stringify(projectData));\
+            }\
+
+            // Save title/description on blur\
+            projectTitleElem.addEventListener(\'blur\', saveProjectData);\
+            projectDescriptionElem.addEventListener(\'blur\', saveProjectData);\
+
+            function renderTasks() {\
+                taskListTodo.innerHTML = \'\';\
+                taskListDoing.innerHTML = \'\';\\
+                taskListDone.innerHTML = \'\';\
+
+                projectData.tasks.forEach((task, index) => {\
+                    const listItem = document.createElement(\'li\');\
+                    listItem.classList.add(\'task-item\');\
+                    listItem.dataset.index = index; // Store original index\
+
+                    let buttonsHtml = \'\';\
+                    if (task.status === \'todo\') {\
+                        buttonsHtml = `\
+                            <button class=\"move-btn next\" data-action=\"next\">진행 중으로 →</button>\
+                            <button class=\"delete-btn\" data-action=\"delete\">삭제</button>\
+                        `;\
+                    } else if (task.status === \'doing\') {\
+                        buttonsHtml = `\
+                            <button class=\"move-btn prev\" data-action=\"prev\">← 할 일로</button>\
+                            <button class=\"move-btn next\" data-action=\"next\">완료로 →</button>\
+                            <button class=\"delete-btn\" data-action=\"delete\">삭제</button>\
+                        `;\
+                    } else if (task.status === \'done\') {\
+                        buttonsHtml = `\
+                            <button class=\"move-btn prev\" data-action=\"prev\">← 진행 중으로</button>\
+                            <button class=\"delete-btn\" data-action=\"delete\">삭제</button>\
+                        `;\
+                    }\
+
+                    listItem.innerHTML = `\
+                        <div class=\"task-item-content\">${task.text}</div>\
+                        <div class=\"task-actions\">\
+                            ${buttonsHtml}\
+                        </div>\
+                    `;\
+
+                    if (task.status === \'todo\') {\
+                        taskListTodo.appendChild(listItem);\
+                    } else if (task.status === \'doing\') {\
+                        taskListDoing.appendChild(listItem);\
+                    } else if (task.status === \'done\') {\
+                        taskListDone.appendChild(listItem);\
+                    }\
+                });\
+            }\
+
+
+
